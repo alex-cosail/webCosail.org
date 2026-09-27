@@ -1,0 +1,6 @@
+{
+  "name": "CoSail - CourseMate",
+  "description": "Marine passage planning and navigation platform. 1-click crew sharing, paper chart photo calibration, nautical classroom with instant reviews, pocket storm/hazard navigator, and cloud projects.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

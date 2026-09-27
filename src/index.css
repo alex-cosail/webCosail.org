@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #64748B;
+    background-color: #F0F6FF;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading, .font-display {
+    font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+    color: #0F2C59;
+  }
+}
+
+/* Nautical subtle wave animation */
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.6deg);
+  }
+}
+
+@keyframes waveShift {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-15px);
+  }
+}
+
+.animate-subtle-float {
+  animation: subtleFloat 5s ease-in-out infinite;
+}
+
+.animate-wave-slow {
+  animation: waveShift 8s ease-in-out infinite;
+}
+
+
