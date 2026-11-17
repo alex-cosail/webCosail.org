@@ -7,3 +7,7 @@ coverage/
 .env*
 !.env.example
 *.zip
+
+# Source files Alexey hands over to Claude / files Claude hands over for manual placement
+inbox/
+Claude outputs/
