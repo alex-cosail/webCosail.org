@@ -1,0 +1,46 @@
+---
+import '../styles/global.css';
+import { htmlLang, langList, localizePath, ogLocale, defaultLang, type Lang } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  path: string; // language-neutral route, e.g. "/"
+}
+
+const { title, description, lang, path } = Astro.props;
+const site = Astro.site ?? new URL('https://cosail.org');
+const abs = (p: string) => new URL(p, site).href;
+---
+
+<!doctype html>
+<html lang={htmlLang[lang]} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Language versions for search engines -->
+    <link rel="canonical" href={abs(localizePath(lang, path))} />
+    {langList.map((l) => (
+      <link rel="alternate" hreflang={htmlLang[l]} href={abs(localizePath(l, path))} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={abs(localizePath(defaultLang, path))} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={ogLocale[lang]} />
+
+    <!-- Google Fonts: Montserrat & Open Sans (with Cyrillic and Turkish glyphs) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body class="min-h-screen antialiased selection:bg-[#2E80FF] selection:text-white">
+    <slot />
+  </body>
+</html>

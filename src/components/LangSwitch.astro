@@ -1,0 +1,27 @@
+---
+// EN / RU / TR switcher. Links to the same page in another language.
+import { langList, languages, localizePath, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  path: string; // language-neutral route, e.g. "/"
+}
+
+const { lang, path } = Astro.props;
+---
+
+<nav aria-label="Language" class="flex items-center rounded-lg bg-white/10 p-0.5 text-[11px] md:text-xs font-semibold">
+  {langList.map((l) => (
+    <a
+      href={localizePath(l, path)}
+      hreflang={l}
+      aria-current={l === lang ? 'true' : undefined}
+      class:list={[
+        'px-2 py-1 rounded-md transition-colors',
+        l === lang ? 'bg-white text-[#0F2C59]' : 'text-slate-200 hover:text-white',
+      ]}
+    >
+      {languages[l]}
+    </a>
+  ))}
+</nav>

@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* Same palette as alex-cosail.com — one Cosail family of sites. */
+@theme {
+  --color-brand: #2E80FF;
+  --color-navy: #0F2C59;
+  --color-cta: #FF6B4A;
+  --color-cta-hover: #e85a3a;
+  --color-mist: #F0F6FF;
+  --color-slate-grey: #64748B;
+  --color-sea-green: #10B981;
+
+  --font-heading: 'Montserrat', sans-serif;
+  --font-sans: 'Open Sans', sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: #F8FAFC;
+    color: #1E293B;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: #0F2C59;
+  }
+}

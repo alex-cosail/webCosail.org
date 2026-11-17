@@ -1,0 +1,31 @@
+---
+// Temporary place for a screenshot (Alexey sends real ones after seeing the
+// site, 17.11.2026). The label says which screenshot goes here.
+// To replace: put the image into public/media and use <img> instead.
+interface Props {
+  label: string; // "Screenshot"
+  what: string; // what the screenshot shows
+  ratio?: string; // CSS aspect-ratio, e.g. "16 / 10"
+  dark?: boolean;
+}
+
+const { label, what, ratio = '16 / 10', dark = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    'w-full rounded-2xl border-2 border-dashed flex flex-col items-center justify-center text-center p-6 gap-2',
+    dark ? 'border-white/30 bg-white/5 text-slate-200' : 'border-[#2E80FF]/30 bg-[#F0F6FF] text-[#0F2C59]',
+  ]}
+  style={`aspect-ratio: ${ratio}`}
+  role="img"
+  aria-label={`${label}: ${what}`}
+>
+  <svg class="w-10 h-10 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+    <rect x="3" y="4" width="18" height="14" rx="2" />
+    <circle cx="8.5" cy="9" r="1.5" />
+    <path d="M21 15l-5-5L5 18" />
+  </svg>
+  <span class="text-[11px] font-semibold uppercase tracking-wider opacity-60">{label}</span>
+  <span class="text-sm md:text-base font-semibold">{what}</span>
+</div>
