@@ -1,6 +1,8 @@
 name = "webcosail-org"
 compatibility_date = "2024-09-01"
 
+# Astro static site (docs/TZ_Site.md §6): dist/<page>/index.html,
+# unknown address -> dist/404.html (redirects to the visitor's language home).
 [assets]
 directory = "./dist"
-not_found_handling = "single-page-application"
+not_found_handling = "404-page"
