@@ -1,0 +1,32 @@
+---
+// 404: any unknown URL sends the visitor to the home page in their language.
+// /ru/... -> /ru/, /tr/... -> /tr/, everything else -> /
+// Cloudflare serves this page (dist/404.html) with HTTP status 404
+// (wrangler.jsonc: not_found_handling = "404-page"), so search engines
+// do not index broken URLs, while people land on the home page.
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>NavCoSail</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      (function () {
+        var p = location.pathname;
+        var home = /^\/ru(\/|$)/.test(p) ? '/ru/' : /^\/tr(\/|$)/.test(p) ? '/tr/' : '/';
+        location.replace(home);
+      })();
+    </script>
+    <noscript><meta http-equiv="refresh" content="0; url=/" /></noscript>
+  </head>
+  <body class="flex min-h-screen items-center justify-center bg-navy p-6 text-center text-white">
+    <p>
+      <a href="/" class="font-semibold underline">cosail.org</a>
+    </p>
+  </body>
+</html>

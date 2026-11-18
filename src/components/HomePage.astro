@@ -1,0 +1,404 @@
+---
+// Home page of cosail.org — showcase of the NavCoSail program (docs/TZ_Site.md §3).
+// Rendered for every language: /, /ru/, /tr/.
+// Blocks top to bottom: header, hero, features (3), QR route, for schools
+// (live training task in a window), Cosail events, versions, footer.
+// Screenshots are placeholders for now (Placeholder.astro) — Alexey sends
+// real ones after seeing the site.
+import Layout from '../layouts/Layout.astro';
+import LangSwitch from './LangSwitch.astro';
+import Placeholder from './Placeholder.astro';
+import { home } from '../i18n/home';
+import { localizePath, type Lang } from '../i18n/ui';
+import {
+  ALEX_COSAIL_URL,
+  CONTACT_EMAIL,
+  DEMO_ROUTE_URL,
+  DEMO_TASK_EMBED_URL,
+  DEMO_TASK_URL,
+  MOODLE_SNIPPET,
+  NAV_URL,
+  PRIVACY_URL,
+  TERMS_URL,
+} from '../data/site';
+import { versions } from '../data/versions';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = home[lang];
+const PATH = '/';
+
+// Versions: newest first; the first VISIBLE are shown, the rest behind "All versions"
+const VISIBLE = 6;
+const sorted = [...versions].sort((a, b) => b.date.localeCompare(a.date));
+const shown = sorted.slice(0, VISIBLE);
+const hidden = sorted.slice(VISIBLE);
+const dateLabel = (iso: string) => {
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${d} ${t.versions.months[m - 1]} ${y}`;
+};
+const versionLabel = (v: string, _iso: string) => `v${v}`;
+
+// Feature cards: where "try it" leads (all into the program for now)
+const FEATURE_LINKS = [NAV_URL, NAV_URL, NAV_URL];
+
+// Feature screenshots (public/media, WebP 800 + 1600 px wide); null = placeholder for now
+const FEATURE_IMAGES: ({ base: string; w: number; h: number } | null)[] = [
+  { base: '/media/fast-route', w: 1600, h: 788 }, // Alexey 17.11.2026: Fast Route + Share, Saronic Gulf
+  { base: '/media/passage-plan', w: 1600, h: 788 }, // Alexey 17.11.2026: route + Passage Plan, Marmaris
+  { base: '/media/paper-chart', w: 1600, h: 788 }, // Alexey 17.11.2026: two paper charts, Gulf of Kotor
+];
+---
+
+<Layout title={t.meta.title} description={t.meta.description} lang={lang} path={PATH}>
+
+  <!-- 0. Header -->
+  <header class="sticky top-0 z-50 bg-[#0F2C59] border-b border-white/10 px-4 py-2 shadow-md">
+    <div class="max-w-6xl mx-auto flex items-center justify-between gap-3">
+      <a href={localizePath(lang, '/')} class="flex items-center gap-2.5 shrink-0" aria-label="NavCoSail">
+        <span class="block w-11 h-11 md:w-12 md:h-12 rounded-full bg-white p-1 shadow-md ring-2 ring-white/20">
+          <img src="/media/logo.svg" alt={t.logoAlt} width="48" height="48" class="w-full h-full rounded-full" />
+        </span>
+        <span class="font-heading font-bold text-white text-lg md:text-xl tracking-tight">NavCoSail</span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm text-slate-200 font-medium">
+        <a href="#features" class="hover:text-white transition-colors">{t.nav.features}</a>
+        <a href="#qr" class="hover:text-white transition-colors">{t.nav.qr}</a>
+        <a href="#schools" class="hover:text-white transition-colors">{t.nav.schools}</a>
+        <a href="#events" class="hover:text-white transition-colors">{t.nav.events}</a>
+        <a href="#versions" class="hover:text-white transition-colors">{t.nav.versions}</a>
+      </nav>
+
+      <div class="flex items-center gap-2 md:gap-3">
+        <LangSwitch lang={lang} path={PATH} />
+        <a
+          href={NAV_URL}
+          class="text-xs md:text-sm font-semibold px-3 md:px-4 py-2 rounded-xl bg-[#FF6B4A] hover:bg-[#e85a3a] text-white transition-all shadow-md shadow-black/20 whitespace-nowrap"
+        >
+          <span class="hidden sm:inline">{t.open}</span><span class="sm:hidden">{t.openShort}</span> →
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 1. Hero -->
+    <section class="relative overflow-hidden bg-[#0F2C59] text-white">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#0F2C59] via-[#123a73] to-[#1d5fbf] opacity-95"></div>
+      <div class="relative max-w-6xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+        <div class="space-y-6">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider rounded-full bg-white/15 border border-white/30">
+            <span class="w-2 h-2 rounded-full bg-[#10B981]"></span>
+            {t.hero.badge}
+          </span>
+          <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-white">
+            {t.hero.h1}
+          </h1>
+          <p class="text-base md:text-lg text-slate-200 leading-relaxed">{t.hero.sub}</p>
+          <div class="flex flex-wrap gap-3">
+            <a href={NAV_URL} class="px-6 py-3 rounded-xl bg-[#FF6B4A] hover:bg-[#e85a3a] font-semibold shadow-lg shadow-black/20 transition-all">
+              {t.open} →
+            </a>
+            <a href="#features" class="px-6 py-3 rounded-xl border border-white/40 hover:bg-white/10 font-semibold transition-all">
+              {t.hero.more}
+            </a>
+          </div>
+        </div>
+        <div class="grid grid-cols-[1fr_auto] gap-4 items-end">
+          <!-- Alexey 17.11.2026: own paper chart of the Seychelles with a route (PC) -->
+          <img
+            src="/media/hero-pc-1600.webp"
+            srcset="/media/hero-pc-800.webp 800w, /media/hero-pc-1600.webp 1600w"
+            sizes="(min-width: 768px) 520px, 75vw"
+            width="1600"
+            height="971"
+            alt="NavCoSail"
+            fetchpriority="high"
+            decoding="async"
+            class="w-full h-auto rounded-2xl shadow-2xl shadow-black/40 ring-1 ring-white/20"
+          />
+          <div class="w-24 md:w-32">
+            <!-- Alexey 17.11.2026: phone layout (Chrome device mode), Praslin — Curieuse -->
+            <img
+              src="/media/hero-phone.webp"
+              width="342"
+              height="739"
+              alt="NavCoSail — smartphone"
+              decoding="async"
+              class="w-full h-auto rounded-[1.25rem] border-[5px] border-[#0b1a33] shadow-2xl shadow-black/50 bg-[#0b1a33]"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Features -->
+    <section id="features" class="scroll-mt-20 max-w-6xl mx-auto px-4 py-20">
+      <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+        <h2 class="text-2xl md:text-4xl font-bold">{t.features.title}</h2>
+        <p class="text-slate-600">{t.features.sub}</p>
+      </div>
+      <div class="space-y-16">
+        {t.features.items.map((f, i) => (
+          <article class="grid md:grid-cols-2 gap-8 items-center">
+            <div class:list={[i % 2 === 1 && 'md:order-2']}>
+              {FEATURE_IMAGES[i] ? (
+                <img
+                  src={`${FEATURE_IMAGES[i]!.base}-1600.webp`}
+                  srcset={`${FEATURE_IMAGES[i]!.base}-800.webp 800w, ${FEATURE_IMAGES[i]!.base}-1600.webp 1600w`}
+                  sizes="(min-width: 768px) 560px, 100vw"
+                  width={FEATURE_IMAGES[i]!.w}
+                  height={FEATURE_IMAGES[i]!.h}
+                  alt={f.title}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-auto rounded-2xl shadow-lg border border-slate-200"
+                />
+              ) : (
+                <Placeholder label={t.placeholder} what={f.shot} />
+              )}
+            </div>
+            <div class="space-y-4">
+              <span class="inline-flex w-9 h-9 items-center justify-center rounded-full bg-[#2E80FF]/10 text-[#2E80FF] font-bold">{i + 1}</span>
+              <h3 class="text-xl md:text-2xl font-bold">{f.title}</h3>
+              <p class="text-slate-700 leading-relaxed">{f.text}</p>
+              <a href={FEATURE_LINKS[i]} class="inline-block font-semibold text-[#2E80FF] hover:underline">{f.cta} →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- 3. QR — closing block about the program -->
+    <section id="qr" class="scroll-mt-20 bg-[#F0F6FF] border-y border-[#2E80FF]/10">
+      <div class="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-[1.3fr_1fr] gap-10 items-center">
+        <div class="space-y-5">
+          <h2 class="text-2xl md:text-4xl font-bold">{t.qr.title}</h2>
+          <p class="text-lg text-slate-700 leading-relaxed">{t.qr.text}</p>
+          <ol class="space-y-3">
+            {t.qr.steps.map((s, i) => (
+              <li class="flex items-center gap-3">
+                <span class="shrink-0 w-8 h-8 rounded-full bg-[#0F2C59] text-white text-sm font-bold flex items-center justify-center">{i + 1}</span>
+                <span class="font-medium text-[#0F2C59]">{s}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <figure class="mx-auto w-full max-w-xs bg-white rounded-2xl shadow-lg p-5 text-center space-y-3">
+          <img src="/media/qr-demo-route.png" alt={t.qr.alt} width="320" height="320" class="w-full h-auto" />
+          <figcaption class="text-sm text-slate-600">{t.qr.caption}</figcaption>
+          <a href={DEMO_ROUTE_URL} class="inline-block px-5 py-2.5 rounded-xl bg-[#2E80FF] hover:bg-[#1f6fe6] text-white font-semibold text-sm transition-all">
+            {t.qr.openRoute} →
+          </a>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 4. For schools — live training task in a window -->
+    <section id="schools" class="scroll-mt-20 max-w-6xl mx-auto px-4 py-20">
+      <div class="max-w-3xl mb-10 space-y-4">
+        <span class="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-[#2E80FF]/10 text-[#1F6FE6] border border-[#2E80FF]/30">
+          {t.schools.badge}
+        </span>
+        <h2 class="text-2xl md:text-4xl font-bold">{t.schools.title}</h2>
+        <p class="text-lg text-slate-700 leading-relaxed">{t.schools.text}</p>
+      </div>
+
+      <!-- The program loads only on click: it is heavy, and the page should stay fast -->
+      <div class="rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-[#0F2C59]">
+        <div id="task-frame" class="relative w-full h-[80vh] md:h-[75vh] min-h-[560px]" data-src={DEMO_TASK_EMBED_URL}>
+          <div id="task-poster" class="absolute inset-0 flex flex-col items-center justify-center gap-5 p-6">
+            <!-- Poster: Alexey's screenshot of a task on the Arnor training chart (Test2, 17.11.2026), dimmed -->
+            <img
+              src="/media/task-1600.webp"
+              srcset="/media/task-800.webp 800w, /media/task-1600.webp 1600w"
+              sizes="(min-width: 1152px) 1152px, 100vw"
+              width="1600"
+              height="1086"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-0 w-full h-full object-cover object-left-top pointer-events-none"
+            />
+            <div class="absolute inset-0 bg-[#0F2C59]/55 pointer-events-none"></div>
+            <button
+              id="task-start"
+              type="button"
+              class="relative z-10 px-7 py-3.5 rounded-xl bg-[#FF6B4A] hover:bg-[#e85a3a] text-white text-lg font-semibold shadow-lg shadow-black/30 transition-all"
+            >
+              ▶ {t.schools.start}
+            </button>
+            <span class="relative z-10 text-sm text-slate-200">{t.schools.startNote}</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-3 mt-4">
+        <button id="task-fullscreen" type="button" class="px-4 py-2 rounded-xl border border-slate-300 hover:border-[#2E80FF] hover:text-[#2E80FF] text-sm font-semibold transition-all">
+          ⛶ {t.schools.fullscreen}
+        </button>
+        <a href={DEMO_TASK_URL} target="_blank" rel="noopener" class="px-4 py-2 rounded-xl border border-slate-300 hover:border-[#2E80FF] hover:text-[#2E80FF] text-sm font-semibold transition-all">
+          ↗ {t.schools.newTab}
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 mt-12">
+        <div class="rounded-2xl bg-white border border-slate-200 p-6 space-y-3 shadow-sm">
+          <h3 class="text-lg md:text-xl font-bold">{t.schools.anyTitle}</h3>
+          <p class="text-slate-700 leading-relaxed">{t.schools.anyText}</p>
+        </div>
+        <div class="rounded-2xl bg-white border border-slate-200 p-6 space-y-3 shadow-sm">
+          <h3 class="text-lg md:text-xl font-bold">{t.schools.moodleTitle}</h3>
+          <pre class="bg-[#0F2C59] text-slate-100 text-xs rounded-xl p-4 overflow-x-auto whitespace-pre-wrap break-all"><code id="moodle-code">{MOODLE_SNIPPET}</code></pre>
+          <div class="flex items-center gap-3 flex-wrap">
+            <button id="moodle-copy" type="button" data-done={t.schools.copied} class="px-4 py-2 rounded-xl bg-[#2E80FF] hover:bg-[#1f6fe6] text-white text-sm font-semibold transition-all">
+              {t.schools.copy}
+            </button>
+            <span class="text-sm text-slate-500">{t.schools.moodleNote}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Cosail events -> alex-cosail.com -->
+    <section id="events" class="scroll-mt-20 bg-[#0F2C59] text-white">
+      <div class="max-w-6xl mx-auto px-4 py-16 md:flex items-center justify-between gap-10 space-y-6 md:space-y-0">
+        <div class="space-y-3 max-w-2xl">
+          <h2 class="text-2xl md:text-3xl font-bold text-white">{t.events.title}</h2>
+          <p class="text-slate-200 leading-relaxed">{t.events.text}</p>
+        </div>
+        <a href={ALEX_COSAIL_URL[lang]} class="shrink-0 inline-block px-6 py-3 rounded-xl bg-[#FF6B4A] hover:bg-[#e85a3a] font-semibold shadow-lg shadow-black/20 transition-all">
+          {t.events.btn} →
+        </a>
+      </div>
+    </section>
+
+    <!-- 6. Versions and what's new -->
+    <section id="versions" class="scroll-mt-20 max-w-3xl mx-auto px-4 py-20">
+      <div class="mb-8 space-y-2">
+        <h2 class="text-2xl md:text-3xl font-bold">{t.versions.title}</h2>
+        <p class="text-slate-600">{t.versions.sub}</p>
+      </div>
+      <ol class="relative border-l-2 border-[#2E80FF]/20 space-y-8 pl-6">
+        {shown.map((v) => (
+          <li class="relative">
+            <span class="absolute -left-[33px] top-1.5 w-4 h-4 rounded-full bg-[#2E80FF] ring-4 ring-white"></span>
+            <div class="flex flex-wrap items-baseline gap-x-3">
+              <span class="font-heading font-bold text-[#0F2C59]">{versionLabel(v.version, v.date)}</span>
+              <span class="text-sm text-slate-500">{dateLabel(v.date)}</span>
+            </div>
+            <ul class="mt-1.5 space-y-1 text-slate-700 leading-relaxed">
+              {v.notes[lang].map((n) => <li>{n}</li>)}
+            </ul>
+          </li>
+        ))}
+      </ol>
+      {hidden.length > 0 && (
+        <details class="mt-8 group">
+          <summary class="cursor-pointer select-none font-semibold text-[#2E80FF] hover:underline list-none">
+            <span class="group-open:hidden">{t.versions.showAll} ({sorted.length}) ↓</span>
+            <span class="hidden group-open:inline">{t.versions.hideAll} ↑</span>
+          </summary>
+          <ol class="relative border-l-2 border-[#2E80FF]/20 space-y-8 pl-6 mt-8">
+            {hidden.map((v) => (
+              <li class="relative">
+                <span class="absolute -left-[33px] top-1.5 w-4 h-4 rounded-full bg-slate-300 ring-4 ring-white"></span>
+                <div class="flex flex-wrap items-baseline gap-x-3">
+                  <span class="font-heading font-bold text-[#0F2C59]">{versionLabel(v.version, v.date)}</span>
+                  <span class="text-sm text-slate-500">{dateLabel(v.date)}</span>
+                </div>
+                <ul class="mt-1.5 space-y-1 text-slate-700 leading-relaxed">
+                  {v.notes[lang].map((n) => <li>{n}</li>)}
+                </ul>
+              </li>
+            ))}
+          </ol>
+        </details>
+      )}
+    </section>
+  </main>
+
+  <!-- 7. Footer -->
+  <footer class="bg-[#0b2142] text-slate-300">
+    <div class="max-w-6xl mx-auto px-4 py-10 grid sm:grid-cols-2 md:grid-cols-4 gap-6 text-sm">
+      <div class="space-y-2">
+        <div class="font-heading font-bold text-white text-lg">NavCoSail</div>
+        <p class="text-slate-400">{t.footer.tagline}</p>
+      </div>
+      <div class="space-y-2">
+        <a href={NAV_URL} class="block hover:text-white">{t.footer.program}</a>
+        <a href={ALEX_COSAIL_URL[lang]} class="block hover:text-white">{t.footer.events}</a>
+      </div>
+      <div class="space-y-2">
+        <a href={PRIVACY_URL} class="block hover:text-white">{t.footer.privacy}</a>
+        <a href={TERMS_URL} class="block hover:text-white">{t.footer.terms}</a>
+      </div>
+      <div class="space-y-2">
+        <div class="text-slate-400">{t.footer.contact}</div>
+        <a href={`mailto:${CONTACT_EMAIL}`} class="block text-white hover:underline">{CONTACT_EMAIL}</a>
+      </div>
+    </div>
+    <div class="border-t border-white/10 text-center text-xs text-slate-500 py-4">© {new Date().getFullYear()} CoSail</div>
+  </footer>
+
+  <script>
+    // "For schools": load the program into the window on click; full screen;
+    // copy the Moodle line.
+    const frameBox = document.getElementById('task-frame');
+    const poster = document.getElementById('task-poster');
+
+    function loadTask(): HTMLIFrameElement | null {
+      if (!frameBox) return null;
+      let iframe = frameBox.querySelector('iframe');
+      if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.src = frameBox.dataset.src ?? '';
+        iframe.title = 'NavCoSail';
+        iframe.allow = 'fullscreen; clipboard-write';
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.className = 'absolute inset-0 w-full h-full border-0 bg-white';
+        frameBox.appendChild(iframe);
+        poster?.remove();
+      }
+      return iframe;
+    }
+
+    document.getElementById('task-start')?.addEventListener('click', () => loadTask());
+
+    document.getElementById('task-fullscreen')?.addEventListener('click', () => {
+      const iframe = loadTask();
+      // Safari on iPhone has no full screen for page elements — open in a new tab there
+      if (iframe && iframe.requestFullscreen) {
+        iframe.requestFullscreen().catch(() => {});
+      } else {
+        const a = document.querySelector<HTMLAnchorElement>('a[target="_blank"]');
+        a?.click();
+      }
+    });
+
+    const copyBtn = document.getElementById('moodle-copy');
+    copyBtn?.addEventListener('click', async () => {
+      const code = document.getElementById('moodle-code')?.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(code);
+        const label = copyBtn.textContent;
+        copyBtn.textContent = copyBtn.dataset.done ?? label;
+        setTimeout(() => (copyBtn.textContent = label), 2000);
+      } catch {
+        // Clipboard not allowed — select the text so it can be copied by hand
+        const range = document.createRange();
+        const el = document.getElementById('moodle-code');
+        if (el) {
+          range.selectNodeContents(el);
+          const sel = window.getSelection();
+          sel?.removeAllRanges();
+          sel?.addRange(range);
+        }
+      }
+    });
+  </script>
+</Layout>

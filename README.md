@@ -1,20 +1,31 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# cosail.org
 
-# Run and deploy your AI Studio app
+Showcase site of the **NavCoSail** navigation program (https://nav.cosail.org).
+Astro + Tailwind, static pages, three languages: EN at `/`, RU at `/ru/`, TR at `/tr/`.
 
-This contains everything you need to run your app locally.
+## Run locally
 
-View your app in AI Studio: https://ai.studio/apps/036a7289-5765-4fbc-b7e4-c2462264a4b0
+```
+npm install
+npm run dev
+```
+Open http://localhost:4321/ (and `/ru/`, `/tr/`).
 
-## Run Locally
+## Where things are
 
-**Prerequisites:**  Node.js
+- `src/components/HomePage.astro` — the home page, all blocks.
+- `src/i18n/home.ts` — all texts (EN / RU / TR).
+- `src/data/site.ts` — addresses: program, demo task id, demo route (QR), contact.
+- `src/data/versions.ts` — "Versions and what's new" list (add an entry with each program release).
+- `src/components/Placeholder.astro` — temporary screenshot places; real images go to `public/media`.
+- `docs/TZ_Site.md` — the specification of the site.
 
+## Branches
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- `main` — working branch.
+- `public` — the published site: Cloudflare builds from it. Publish = merge `main` into `public` and push.
+
+## Folders not in git
+
+- `inbox/` — source files handed over to Claude.
+- `Claude outputs/` — files Claude hands over for manual placement.
