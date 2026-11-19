@@ -15,10 +15,31 @@ Open http://localhost:4321/ (and `/ru/`, `/tr/`).
 
 - `src/components/HomePage.astro` — the home page, all blocks.
 - `src/i18n/home.ts` — all texts (EN / RU / TR).
-- `src/data/site.ts` — addresses: program, demo task id, demo route (QR), contact.
+- `src/data/site.ts` — addresses: program, demo task id, demo route (QR), contact; main site or mirror (build variables).
 - `src/data/versions.ts` — "Versions and what's new" list (add an entry with each program release).
 - `src/components/Placeholder.astro` — temporary screenshot places; real images go to `public/media`.
 - `docs/TZ_Site.md` — the specification of the site.
+
+## Mirror for Russia (ru.cosail.org)
+
+From Russian mobile internet Cloudflare does not open, so the same `public`
+branch is also built with mirror settings and deployed to Firebase Hosting
+(project `cosail-b71fa`, site `cosail-org-ru`, domain `ru.cosail.org`,
+DNS record in Cloudflare **DNS only / grey cloud**). TZ:
+`navcosailClaude/docs/TZ_Russia_Mirror.md` §5.
+
+- `.github/workflows/mirror.yml`: on push to `public` and by hand. Secret
+  `FIREBASE_SERVICE_ACCOUNT`; optional variable `NAV_MIRROR_URL` (program address
+  on the mirror, default `https://nav.ru.cosail.org/`).
+- Build variables: `PUBLIC_MIRROR=1`, `PUBLIC_NAV_URL`. Local test:
+  `PUBLIC_MIRROR=1 npx astro build --outDir dist-mirror`.
+- On the mirror all links go to mirrors: program -> `nav.ru.cosail.org`,
+  events -> `ru.alex-cosail.com`. QR image: `public/media/qr-demo-route-ru.svg`
+  (encodes the demo route on `nav.ru.cosail.org`; if the route changes, remake
+  both QR images).
+- Canonical / hreflang of the mirror point to cosail.org.
+- Footer: main site shows "mirror: ru.cosail.org", the mirror shows
+  "main address: cosail.org" (`src/components/MirrorNote.astro`).
 
 ## Branches
 

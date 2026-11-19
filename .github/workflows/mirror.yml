@@ -1,0 +1,56 @@
+# Mirror of cosail.org for Russia: ru.cosail.org on Firebase Hosting
+# (site "cosail-org-ru" in Firebase project "Cosail"). Cloudflare stays the main
+# host; from Russia (mobile internet) Cloudflare does not open, Firebase does.
+# TZ: navcosailClaude/docs/TZ_Russia_Mirror.md §5.
+#
+# The same `public` branch is built a second time with mirror settings:
+#   PUBLIC_MIRROR=1     footer says "Main address: cosail.org", links to the
+#                       program and to alex-cosail.com go to their mirrors
+#   PUBLIC_NAV_URL      program address on the mirror (repo variable
+#                       NAV_MIRROR_URL; empty = https://nav.ru.cosail.org/)
+#
+# Runs: on every push to `public` and by hand.
+#
+# Setup (once), repo Settings -> Secrets and variables -> Actions:
+#   Secrets   FIREBASE_SERVICE_ACCOUNT = JSON key of github-deploy@cosail-b71fa
+#   Variables NAV_MIRROR_URL (optional, e.g. https://cosail-b71fa.web.app/)
+
+name: Mirror (Firebase)
+
+on:
+  push:
+    branches: [public]
+  workflow_dispatch:
+
+concurrency:
+  group: mirror
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: public
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build mirror
+        env:
+          PUBLIC_MIRROR: '1'
+          PUBLIC_NAV_URL: ${{ vars.NAV_MIRROR_URL }}
+        run: npm run build
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: cosail-b71fa
+          channelId: live

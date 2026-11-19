@@ -1,0 +1,27 @@
+---
+// Footer line about the second address of the site.
+// Main site: "Site not opening from Russia? Mirror: ru.cosail.org".
+// Mirror: "Main address: cosail.org".
+import { IS_MIRROR, MAIN_URL, MIRROR_URL } from '../data/site';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  path: string; // localized path of this page, e.g. "/ru/"
+}
+const { lang, path } = Astro.props;
+
+const TEXT: Record<Lang, { main: string; mirror: string }> = {
+  en: { main: 'Site not opening from Russia? Mirror:', mirror: 'Main address:' },
+  ru: { main: 'Сайт не открывается из России? Зеркало:', mirror: 'Основной адрес:' },
+  tr: { main: 'Site Rusya’dan açılmıyor mu? Yansı:', mirror: 'Ana adres:' },
+};
+const target = IS_MIRROR ? MAIN_URL : MIRROR_URL;
+const href = new URL(path, target).href;
+const label = new URL(target).host;
+---
+
+<div class="text-slate-400">
+  {IS_MIRROR ? TEXT[lang].mirror : TEXT[lang].main}{' '}
+  <a href={href} class="underline hover:text-white transition-colors">{label}</a>
+</div>

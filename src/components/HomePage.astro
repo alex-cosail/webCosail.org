@@ -8,11 +8,13 @@
 import Layout from '../layouts/Layout.astro';
 import LangSwitch from './LangSwitch.astro';
 import Placeholder from './Placeholder.astro';
+import MirrorNote from './MirrorNote.astro';
 import { home } from '../i18n/home';
 import { localizePath, type Lang } from '../i18n/ui';
 import {
   ALEX_COSAIL_URL,
   CONTACT_EMAIL,
+  DEMO_ROUTE_QR,
   DEMO_ROUTE_URL,
   DEMO_TASK_EMBED_URL,
   DEMO_TASK_URL,
@@ -190,7 +192,7 @@ const FEATURE_IMAGES: ({ base: string; w: number; h: number } | null)[] = [
           </ol>
         </div>
         <figure class="mx-auto w-full max-w-xs bg-white rounded-2xl shadow-lg p-5 text-center space-y-3">
-          <img src="/media/qr-demo-route.png" alt={t.qr.alt} width="320" height="320" class="w-full h-auto" />
+          <img src={DEMO_ROUTE_QR} alt={t.qr.alt} width="320" height="320" class="w-full h-auto" />
           <figcaption class="text-sm text-slate-600">{t.qr.caption}</figcaption>
           <a href={DEMO_ROUTE_URL} class="inline-block px-5 py-2.5 rounded-xl bg-[#2E80FF] hover:bg-[#1f6fe6] text-white font-semibold text-sm transition-all">
             {t.qr.openRoute} →
@@ -342,7 +344,10 @@ const FEATURE_IMAGES: ({ base: string; w: number; h: number } | null)[] = [
         <a href={`mailto:${CONTACT_EMAIL}`} class="block text-white hover:underline">{CONTACT_EMAIL}</a>
       </div>
     </div>
-    <div class="border-t border-white/10 text-center text-xs text-slate-500 py-4">© {new Date().getFullYear()} CoSail</div>
+    <div class="border-t border-white/10 text-center text-xs text-slate-500 py-4 space-y-1">
+      <MirrorNote lang={lang} path={localizePath(lang, PATH)} />
+      <div>© {new Date().getFullYear()} CoSail</div>
+    </div>
   </footer>
 
   <script>
