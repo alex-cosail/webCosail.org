@@ -37,6 +37,10 @@ DNS record in Cloudflare **DNS only / grey cloud**). TZ:
   events -> `ru.alex-cosail.com`. QR image: `public/media/qr-demo-route-ru.svg`
   (encodes the demo route on `nav.ru.cosail.org`; if the route changes, remake
   both QR images).
+- Russian is the default on the mirror: `ru.cosail.org/` redirects (302) to
+  `/ru/`, English is served at `/en/` (redirect + rewrite in `firebase.json`).
+  Language switch and logo use `sitePath()` (`src/i18n/ui.ts`); the main site
+  is unchanged (English at `/`).
 - Canonical / hreflang of the mirror point to cosail.org.
 - Footer: main site shows "mirror: ru.cosail.org", the mirror shows
   "main address: cosail.org" (`src/components/MirrorNote.astro`).

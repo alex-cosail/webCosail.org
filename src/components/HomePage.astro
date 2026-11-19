@@ -10,7 +10,7 @@ import LangSwitch from './LangSwitch.astro';
 import Placeholder from './Placeholder.astro';
 import MirrorNote from './MirrorNote.astro';
 import { home } from '../i18n/home';
-import { localizePath, type Lang } from '../i18n/ui';
+import { localizePath, sitePath, type Lang } from '../i18n/ui';
 import {
   ALEX_COSAIL_URL,
   CONTACT_EMAIL,
@@ -60,7 +60,7 @@ const FEATURE_IMAGES: ({ base: string; w: number; h: number } | null)[] = [
   <!-- 0. Header -->
   <header class="sticky top-0 z-50 bg-[#0F2C59] border-b border-white/10 px-4 py-2 shadow-md">
     <div class="max-w-6xl mx-auto flex items-center justify-between gap-3">
-      <a href={localizePath(lang, '/')} class="flex items-center gap-2.5 shrink-0" aria-label="NavCoSail">
+      <a href={sitePath(lang, '/')} class="flex items-center gap-2.5 shrink-0" aria-label="NavCoSail">
         <span class="block w-11 h-11 md:w-12 md:h-12 rounded-full bg-white p-1 shadow-md ring-2 ring-white/20">
           <img src="/media/logo.svg" alt={t.logoAlt} width="48" height="48" class="w-full h-full rounded-full" />
         </span>
