@@ -25,9 +25,8 @@ export const NAV_URL = IS_MIRROR
   ? (import.meta.env.PUBLIC_NAV_URL || 'https://nav.ru.cosail.org/').replace(/\/?$/, '/')
   : 'https://nav.cosail.org/';
 
-/** Demo training task for the "For schools" block (TZ §4.1). Alexey will
- *  prepare a more colourful one later — then replace this id. */
-export const DEMO_TASK_ID = '2a02a0d7-18b8-4e44-816e-bdf6b4079635';
+/** Demo training task for the "For schools" block (TZ §4.1) — given by Alexey 19.11.2026. */
+export const DEMO_TASK_ID = '267ab7d6-38c1-42b2-88b5-4a90466756b9';
 
 /** Task in the window on the page: no "home", fullscreen + new tab buttons
  *  (program 0.9.3-beta.47, docs of the program: TZ_Cosail_Org_Site.md §5). */
