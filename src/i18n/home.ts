@@ -53,7 +53,7 @@ export const home: Record<Lang, {
     },
     features: {
       title: 'What the program can do',
-      sub: 'From a quick sketch to a full passage plan — with the same tools on a computer and a phone.',
+      sub: 'From a quick sketch to a full passage plan — the same tools at the chart table, on a computer and on a phone.',
       items: [
         {
           title: 'A route in a few clicks',
@@ -68,16 +68,16 @@ export const home: Record<Lang, {
           shot: 'Route and Passage Plan',
         },
         {
-          title: 'No subscription for the area?',
-          text: 'Photograph the paper chart from your chart table, tie it to the map by a few points — and work on it in the program just like on an electronic chart.',
+          title: 'No paid subscription?',
+          text: 'Open charts of the whole world are already in the app! And if they are not enough, photograph the paper chart from your chart table, tie it to the map by a few points — and work on it in the program just like on an electronic chart.',
           cta: 'Add a chart',
           shot: 'Paper chart in the program',
         },
       ],
     },
     qr: {
-      title: 'Do you have a plan for the perfect week-long route?',
-      text: 'Just put it on your page as a QR code! A guest points a phone camera at it — and the route opens in the program.',
+      title: 'Got plans for perfect routes?',
+      text: 'Just put them on your page as QR codes! A guest points a phone camera at it — and the route opens in the program.',
       steps: ['Build the route', 'Press “Share”', 'Save the QR code and place it anywhere'],
       caption: 'Scan it — this is a real route',
       openRoute: 'Open the route',
@@ -139,7 +139,7 @@ export const home: Record<Lang, {
     },
     features: {
       title: 'Что умеет программа',
-      sub: 'От быстрой прикидки до полного плана перехода — одни и те же инструменты на компьютере и в телефоне.',
+      sub: 'От быстрой прикидки до полного плана перехода — одни и те же инструменты на штурманском столе, на компьютере и в телефоне.',
       items: [
         {
           title: 'Маршрут за несколько кликов',
@@ -154,16 +154,16 @@ export const home: Record<Lang, {
           shot: 'Маршрут и Passage Plan',
         },
         {
-          title: 'Нет нужной подписки?',
-          text: 'Сфотографируйте бумажную карту со штурманского стола, привяжите её по нескольким точкам — и работайте на ней в программе так же, как на электронной.',
+          title: 'Нет платной подписки?',
+          text: 'Открытые карты мира уже внутри приложения! А если их недостаточно — сфотографируйте бумажную карту со штурманского стола, привяжите её по нескольким точкам — и работайте на ней в программе так же, как на электронной.',
           cta: 'Добавить карту',
           shot: 'Бумажная карта в программе',
         },
       ],
     },
     qr: {
-      title: 'У вас есть план идеального маршрута на неделю?',
-      text: 'Просто разместите его в виде QR-кода на своей страничке! Гость наводит камеру телефона — и маршрут открывается в программе.',
+      title: 'У вас есть планы идеальных маршрутов?',
+      text: 'Просто разместите их в виде QR-кодов на своей страничке! Гость наводит камеру телефона — и маршрут открывается в программе.',
       steps: ['Постройте маршрут', 'Нажмите «Поделиться»', 'Сохраните QR-код и разместите где угодно'],
       caption: 'Отсканируйте — это настоящий маршрут',
       openRoute: 'Открыть маршрут',
@@ -225,7 +225,7 @@ export const home: Record<Lang, {
     },
     features: {
       title: 'Program neler yapabilir',
-      sub: 'Hızlı bir taslaktan tam seyir planına — bilgisayarda ve telefonda aynı araçlarla.',
+      sub: 'Hızlı bir taslaktan tam seyir planına — harita masasında, bilgisayarda ve telefonda aynı araçlarla.',
       items: [
         {
           title: 'Birkaç tıklamayla rota',
@@ -240,16 +240,16 @@ export const home: Record<Lang, {
           shot: 'Rota ve Passage Plan',
         },
         {
-          title: 'Gerekli abonelik yok mu?',
-          text: 'Harita masanızdaki kâğıt haritanın fotoğrafını çekin, birkaç noktadan haritaya bağlayın — ve programda elektronik harita gibi üzerinde çalışın.',
+          title: 'Ücretli aboneliğiniz yok mu?',
+          text: 'Tüm dünyanın açık haritaları zaten uygulamanın içinde! Yetmezse harita masanızdaki kâğıt haritanın fotoğrafını çekin, birkaç noktadan haritaya bağlayın — ve programda elektronik harita gibi üzerinde çalışın.',
           cta: 'Harita ekle',
           shot: 'Programda kâğıt harita',
         },
       ],
     },
     qr: {
-      title: 'Bir haftalık mükemmel rota planınız var mı?',
-      text: 'Onu sayfanıza QR kodu olarak koyun! Misafir telefon kamerasını tutar — ve rota programda açılır.',
+      title: 'Mükemmel rota planlarınız var mı?',
+      text: 'Onları sayfanıza QR kodu olarak koyun! Misafir telefon kamerasını tutar — ve rota programda açılır.',
       steps: ['Rotayı oluşturun', '“Paylaş”a basın', 'QR kodunu kaydedin ve istediğiniz yere koyun'],
       caption: 'Tarayın — bu gerçek bir rota',
       openRoute: 'Rotayı aç',
