@@ -50,7 +50,8 @@ export const DEMO_ROUTE_QR = IS_MIRROR ? '/media/qr-demo-route-ru.svg' : '/media
 
 /** Regattas and courses — alex-cosail.com (mirror: ru.alex-cosail.com) in the visitor's language. */
 const ALEX = IS_MIRROR ? 'https://ru.alex-cosail.com/' : 'https://alex-cosail.com/';
-export const ALEX_COSAIL_URL = { en: ALEX, ru: `${ALEX}ru/`, tr: `${ALEX}tr/` } as const;
+// On the mirror ru.alex-cosail.com English lives at /en/ ("/" redirects to Russian).
+export const ALEX_COSAIL_URL = { en: IS_MIRROR ? `${ALEX}en/` : ALEX, ru: `${ALEX}ru/`, tr: `${ALEX}tr/` } as const;
 
 /** Contact — the same as on alex-cosail.com (forwarded, personal address hidden). */
 export const CONTACT_EMAIL = 'contact@alex-cosail.com';
