@@ -3,7 +3,7 @@
 // Main site: "Site not opening from Russia? Mirror: ru.cosail.org".
 // Mirror: "Main address: cosail.org".
 import { IS_MIRROR, MAIN_URL, MIRROR_URL } from '../data/site';
-import type { Lang } from '../i18n/ui';
+import { defaultLang, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -17,7 +17,9 @@ const TEXT: Record<Lang, { main: string; mirror: string }> = {
   tr: { main: 'Site Rusya’dan açılmıyor mu? Yansı:', mirror: 'Ana adres:' },
 };
 const target = IS_MIRROR ? MAIN_URL : MIRROR_URL;
-const href = new URL(path, target).href;
+// On the mirror English lives at /en/... ("/" there redirects to Russian)
+const targetPath = !IS_MIRROR && lang === defaultLang ? `/en${path}` : path;
+const href = new URL(targetPath, target).href;
 const label = new URL(target).host;
 ---
 
