@@ -45,6 +45,28 @@ DNS record in Cloudflare **DNS only / grey cloud**). TZ:
 - Footer: main site shows "mirror: ru.cosail.org", the mirror shows
   "main address: cosail.org" (`src/components/MirrorNote.astro`).
 
+## Mirror check (twice a day)
+
+`.github/workflows/check-mirrors.yml` runs `scripts/check-mirrors.mjs` at
+06:00 and 18:00 UTC+3 (runs from `main`) and by hand. It checks the mirrors
+(`ru.cosail.org`, `nav.ru.cosail.org`, `ru.alex-cosail.com`) and the main sites:
+
+- directly, with browser headers (`Accept-Encoding: br` matters: a stale
+  Firebase CDN "Site Not Found" was served only to browsers), expecting 200
+  and a marker text;
+- from Russia via check-host.net nodes (Moscow, St Petersburg; data centres,
+  mobile operators may differ), mirrors only. Down = at least half the nodes
+  fail; one failing node is only a warning.
+
+If something is down the run fails and GitHub e-mails about it (setting:
+github.com/settings/notifications -> Actions -> e-mail, failed workflows
+only). The list of addresses is at the top of the script. Local run:
+`node scripts/check-mirrors.mjs`.
+
+Stale CDN 404 fix (20.11.2026, `nav.ru.cosail.org`): make a new Firebase
+release of the same content (e.g. clone the live version via Hosting API
+`versions:clone` and release it); `firebase hosting:clone live live` is refused.
+
 ## Branches
 
 - `main` — working branch.

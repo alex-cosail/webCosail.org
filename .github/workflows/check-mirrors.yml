@@ -1,0 +1,37 @@
+# Twice a day checks the sites and the Russian mirrors (scripts/check-mirrors.mjs):
+# directly with browser headers and from Russia via check-host.net nodes.
+#
+# Letters only when something is down: the job fails, and GitHub e-mails about
+# failed scheduled runs (to whoever last changed the cron line below).
+# Needs github.com/settings/notifications -> Actions: e-mail on,
+# "Only notify for failed workflows".
+#
+# Times: 06:00 and 18:00 Moscow / Istanbul (UTC+3) = 03:00 and 15:00 UTC.
+# GitHub may start scheduled runs some minutes late.
+# Public repo: after 60 days without commits GitHub pauses schedules
+# (it sends a warning e-mail first; any commit or "Enable workflow" resumes).
+
+name: Check mirrors
+
+on:
+  schedule:
+    - cron: '0 3,15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: node scripts/check-mirrors.mjs
